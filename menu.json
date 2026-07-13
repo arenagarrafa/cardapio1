@@ -3,7 +3,7 @@
     "imagem": "banner.png"
   },
   "promo": {
-    "ativa": false,
+    "ativa": true,
     "titulo": "PROMOÇÃO DO DIA",
     "descricao": "Balde de Brahma Chopp — 3 unidades geladíssimas",
     "preco": "R$ 30,00",
@@ -29,18 +29,49 @@
       "title": "CERVEJAS 600 ML",
       "columns": [
         [
-          { "name": "Skol 600 ml", "price": "R$ 10,00" },
-          { "name": "Antarctica 600 ml", "price": "R$ 10,00" },
-          { "name": "Brahma Chopp 600 ml", "price": "R$ 10,00" },
-          { "name": "Brahma Duplo Malte 600 ml", "price": "R$ 11,00" },
-          { "name": "Budweiser 600 ml", "price": "R$ 11,00" }
+          {
+            "name": "Skol 600 ml",
+            "price": "R$ 10,00"
+          },
+          {
+            "name": "Antarctica 600 ml",
+            "price": "R$ 10,00"
+          },
+          {
+            "name": "Brahma Chopp 600 ml",
+            "price": "R$ 10,00"
+          },
+          {
+            "name": "Brahma Duplo Malte 600 ml",
+            "price": "R$ 11,00"
+          },
+          {
+            "name": "Budweiser 600 ml",
+            "price": "R$ 11,00"
+          }
         ],
         [
-          { "name": "Império 600 ml", "price": "R$ 12,00" },
-          { "name": "Antarctica Original 600 ml", "price": "R$ 12,00" },
-          { "name": "Stella Artois 600 ml", "price": "R$ 13,00" },
-          { "name": "Stella Artois Gold 600 ml", "price": "R$ 15,00", "esgotado": false },
-          { "name": "Heineken 600 ml", "price": "R$ 15,00" }
+          {
+            "name": "Império 600 ml",
+            "price": "R$ 12,00"
+          },
+          {
+            "name": "Antarctica Original 600 ml",
+            "price": "R$ 12,00"
+          },
+          {
+            "name": "Stella Artois 600 ml",
+            "price": "R$ 13,00"
+          },
+          {
+            "name": "Stella Artois Gold 600 ml",
+            "price": "R$ 15,00",
+            "esgotado": false
+          },
+          {
+            "name": "Heineken 600 ml",
+            "price": "R$ 15,00"
+          }
         ]
       ]
     },
@@ -48,12 +79,30 @@
       "title": "CERVEJAS NO BALDE",
       "columns": [
         [
-          { "subhead": "600 ml — balde com 3 un" },
-          { "name": "Stella Artois 600 ml", "price": "R$ 40,00" },
-          { "name": "Budweiser 600 ml", "price": "R$ 38,00" },
-          { "name": "Império 600 ml", "price": "R$ 38,00" },
-          { "subhead": "Refrigerante", "boxed": true },
-          { "name": "Refrigerante 1 L", "price": "R$ 10,00", "boxed": true }
+          {
+            "subhead": "600 ml — balde com 3 un"
+          },
+          {
+            "name": "Stella Artois 600 ml",
+            "price": "R$ 40,00"
+          },
+          {
+            "name": "Budweiser 600 ml",
+            "price": "R$ 38,00"
+          },
+          {
+            "name": "Império 600 ml",
+            "price": "R$ 38,00"
+          },
+          {
+            "subhead": "Refrigerante",
+            "boxed": true
+          },
+          {
+            "name": "Refrigerante 1 L",
+            "price": "R$ 10,00",
+            "boxed": true
+          }
         ]
       ],
       "callout": ""
@@ -62,13 +111,33 @@
       "title": "TIRA GOSTO",
       "columns": [
         [
-          { "subhead": "Para petiscar" },
-          { "name": "Batata Frita", "price": "R$ 25,00" },
-          { "name": "Ovos de Codorna (8 un)", "price": "R$ 18,00" },
-          { "name": "Calabresa", "price": "R$ 30,00" },
-          { "name": "Calabresa e Fritas", "price": "R$ 38,00" },
-          { "name": "Filé com Fritas", "price": "R$ 45,00" },
-          { "name": "Filé — 300 g", "price": "R$ 55,00" }
+          {
+            "subhead": "Para petiscar"
+          },
+          {
+            "name": "Batata Frita",
+            "price": "R$ 25,00"
+          },
+          {
+            "name": "Ovos de Codorna (8 un)",
+            "price": "R$ 18,00"
+          },
+          {
+            "name": "Calabresa",
+            "price": "R$ 30,00"
+          },
+          {
+            "name": "Calabresa e Fritas",
+            "price": "R$ 38,00"
+          },
+          {
+            "name": "Filé com Fritas",
+            "price": "R$ 45,00"
+          },
+          {
+            "name": "Filé — 300 g",
+            "price": "R$ 55,00"
+          }
         ]
       ],
       "callout": ""
@@ -77,18 +146,48 @@
       "title": "BEBIDAS",
       "columns": [
         [
-          { "name": "Refrigerante Lata", "price": "R$ 6,00" },
-          { "name": "Refrigerante KS 290 ml", "price": "R$ 6,00" },
-          { "name": "Água com gás (copo)", "price": "R$ 5,00" },
-          { "name": "Água sem gás (copo)", "price": "R$ 5,00" },
-          { "name": "Cajuína (copo)", "price": "R$ 10,00" }
+          {
+            "name": "Refrigerante Lata",
+            "price": "R$ 6,00"
+          },
+          {
+            "name": "Refrigerante KS 290 ml",
+            "price": "R$ 6,00"
+          },
+          {
+            "name": "Água com gás (copo)",
+            "price": "R$ 5,00"
+          },
+          {
+            "name": "Água sem gás (copo)",
+            "price": "R$ 5,00"
+          },
+          {
+            "name": "Cajuína (copo)",
+            "price": "R$ 10,00"
+          }
         ],
         [
-          { "name": "Suco (copo)", "price": "R$ 8,00" },
-          { "name": "Coco da Praia (copo)", "price": "R$ 7,00" },
-          { "name": "Red Bull 250 ml", "price": "R$ 12,00" },
-          { "name": "Monster 473 ml", "price": "R$ 15,00" },
-          { "name": "Ice", "price": "R$ 10,00" }
+          {
+            "name": "Suco (copo)",
+            "price": "R$ 8,00"
+          },
+          {
+            "name": "Coco da Praia (copo)",
+            "price": "R$ 7,00"
+          },
+          {
+            "name": "Red Bull 250 ml",
+            "price": "R$ 12,00"
+          },
+          {
+            "name": "Monster 473 ml",
+            "price": "R$ 15,00"
+          },
+          {
+            "name": "Ice",
+            "price": "R$ 10,00"
+          }
         ]
       ]
     },
@@ -96,17 +195,42 @@
       "title": "DOSES & DRINKS",
       "columns": [
         [
-          { "subhead": "Doses" },
-          { "name": "Campari", "price": "R$ 10,00" },
-          { "name": "Whisky", "price": "R$ 15,00" },
-          { "name": "Lira", "price": "R$ 10,00" },
-          { "name": "Vinho (Taça)", "price": "R$ 10,00" }
+          {
+            "subhead": "Doses"
+          },
+          {
+            "name": "Campari",
+            "price": "R$ 10,00"
+          },
+          {
+            "name": "Whisky",
+            "price": "R$ 15,00"
+          },
+          {
+            "name": "Lira",
+            "price": "R$ 10,00"
+          },
+          {
+            "name": "Vinho (Taça)",
+            "price": "R$ 10,00"
+          }
         ],
         [
-          { "subhead": "Drinks" },
-          { "name": "Limão", "price": "R$ 13,00" },
-          { "name": "Morango", "price": "R$ 15,00" },
-          { "name": "Kiwi", "price": "R$ 15,00" }
+          {
+            "subhead": "Drinks"
+          },
+          {
+            "name": "Limão",
+            "price": "R$ 13,00"
+          },
+          {
+            "name": "Morango",
+            "price": "R$ 15,00"
+          },
+          {
+            "name": "Kiwi",
+            "price": "R$ 15,00"
+          }
         ]
       ]
     }
