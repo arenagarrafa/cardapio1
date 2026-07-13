@@ -35,7 +35,8 @@
           },
           {
             "name": "Antarctica 600 ml",
-            "price": "R$ 10,00"
+            "price": "R$ 10,00",
+            "status": "esgotado"
           },
           {
             "name": "Brahma Chopp 600 ml",
