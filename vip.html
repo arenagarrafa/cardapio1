@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Arena Garrafa — Área VIP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --panel:#141419;
+    --gold:#d4af37;
+    --gold-light:#f0d878;
+    --gold-dim:rgba(212,175,55,0.35);
+    --white:#f5f3ec;
+    --muted:#9a927e;
+    --red:#e2483d;
+    --line:rgba(212,175,55,0.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse 100% 40% at 50% 0%, rgba(212,175,55,0.08), transparent),
+      var(--bg);
+    color:var(--white);
+    font-family:'Barlow Condensed',sans-serif;
+    min-height:100vh;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    text-align:center;
+    padding:38px 20px 26px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .crown{font-size:30px;letter-spacing:8px;color:var(--gold);}
+  .hero h1{
+    font-family:'Anton',sans-serif;
+    font-size:34px;letter-spacing:0.06em;
+    margin-top:8px;
+    background:linear-gradient(180deg, var(--gold-light), var(--gold));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .sub{
+    font-size:15px;font-weight:700;letter-spacing:0.42em;
+    color:var(--muted);margin-top:4px;text-transform:uppercase;
+  }
+  .hero .rule{
+    width:70px;height:1px;margin:16px auto 0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ===== NAV DE SEÇÕES (chips fixos) ===== */
+  nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(10,10,12,0.96);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;white-space:nowrap;
+    padding:10px 14px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  nav::-webkit-scrollbar{display:none;}
+  nav a{
+    display:inline-block;
+    color:var(--muted);text-decoration:none;
+    font-size:14.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:20px;
+    padding:7px 14px;margin-right:7px;
+    transition:all 0.2s ease;
+  }
+  nav a:active, nav a.on{color:#141005;background:var(--gold);border-color:var(--gold);}
+
+  /* ===== SEÇÕES ===== */
+  main{max-width:560px;margin:0 auto;padding:10px 18px 60px;}
+  section{padding-top:26px;scroll-margin-top:64px;}
+  section h2{
+    font-size:19px;font-weight:800;letter-spacing:0.12em;
+    color:var(--gold);text-transform:uppercase;
+    display:flex;align-items:center;gap:12px;
+    margin-bottom:12px;
+  }
+  section h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg, var(--gold-dim), transparent);}
+
+  .item{
+    display:flex;align-items:baseline;gap:8px;
+    padding:9px 0;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+  }
+  .item .name{font-size:18px;font-weight:500;color:var(--white);}
+  .item .dots{flex:1;border-bottom:1px dotted rgba(154,146,126,0.45);transform:translateY(-4px);min-width:14px;}
+  .item .price{
+    font-family:'Barlow',sans-serif;font-size:16.5px;font-weight:700;
+    color:var(--gold-light);white-space:nowrap;font-variant-numeric:tabular-nums;
+  }
+
+  .item.sold-out .name{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--red);}
+  .item.sold-out .price, .item.sold-out .dots{display:none;}
+  .item.sold-out .tag{
+    margin-left:auto;
+    font-family:'Barlow',sans-serif;font-weight:700;font-size:11.5px;
+    color:var(--red);border:1px solid var(--red);border-radius:3px;
+    padding:2px 8px;letter-spacing:0.08em;
+  }
+
+  /* ===== RODAPÉ ===== */
+  footer{
+    text-align:center;padding:28px 20px 42px;
+    border-top:1px solid var(--line);
+    color:var(--muted);font-size:14.5px;font-weight:600;letter-spacing:0.05em;
+  }
+  footer b{color:var(--gold);}
+  footer .rule{
+    width:70px;height:1px;margin:0 auto 16px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  #loading{text-align:center;padding:60px 20px;color:var(--muted);font-size:17px;}
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="crown">✦ ✦ ✦</div>
+    <h1>ARENA GARRAFA</h1>
+    <div class="sub">Área VIP</div>
+    <div class="rule"></div>
+  </div>
+
+  <nav id="nav"></nav>
+  <div id="loading">Carregando cardápio…</div>
+  <main id="menu"></main>
+
+  <footer>
+    <div class="rule"></div>
+    POVOADO SANTA LUZ DE BAIXO<br>
+    <b>@arena.garrafa</b>
+  </footer>
+
+<script>
+  const DATA_URL = 'vip.json';
+  const POLL_SECONDS = 60;
+
+  let lastDataString = null;
+
+  function cacheBustedUrl(url){
+    return url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
+  }
+
+  function itemStatus(it){
+    if(it.status) return it.status;
+    if(it.esgotado === true) return 'esgotado';
+    return 'disponivel';
+  }
+
+  function slugify(s){
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+
+  function shortTitle(t){
+    // versão curta pro chip de navegação
+    return t.split('—')[0].trim();
+  }
+
+  function render(data){
+    const nav = document.getElementById('nav');
+    const menu = document.getElementById('menu');
+    nav.innerHTML = '';
+    menu.innerHTML = '';
+
+    data.slides.forEach(sec => {
+      // pula seções onde todos os itens estão ocultos
+      const items = sec.columns.flat().filter(it => !it.subhead && itemStatus(it) !== 'oculto');
+      if(!items.length) return;
+
+      const id = slugify(sec.title);
+
+      const a = document.createElement('a');
+      a.href = '#' + id;
+      a.textContent = shortTitle(sec.title);
+      nav.appendChild(a);
+
+      const section = document.createElement('section');
+      section.id = id;
+      section.innerHTML = `<h2>${sec.title}</h2>` + items.map(it => {
+        const soldOut = itemStatus(it) === 'esgotado';
+        return `
+          <div class="item${soldOut ? ' sold-out' : ''}">
+            <span class="name">${it.name}</span>
+            <span class="dots"></span>
+            <span class="price">${it.price || ''}</span>
+            ${soldOut ? '<span class="tag">ESGOTADO</span>' : ''}
+          </div>`;
+      }).join('');
+      menu.appendChild(section);
+    });
+
+    // destaca o chip da seção visível ao rolar
+    const links = [...nav.querySelectorAll('a')];
+    const sections = [...menu.querySelectorAll('section')];
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => obs.observe(s));
+  }
+
+  async function load(){
+    try{
+      const res = await fetch(cacheBustedUrl(DATA_URL), { cache: 'no-store' });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      if(text !== lastDataString){
+        lastDataString = text;
+        render(JSON.parse(text));
+        document.getElementById('loading').style.display = 'none';
+      }
+    } catch(err){
+      document.getElementById('loading').textContent = 'Não foi possível carregar o cardápio. Verifique sua conexão.';
+      console.error(err);
+    }
+  }
+
+  load();
+  setInterval(load, POLL_SECONDS * 1000);
+</script>
+
+</body>
+</html>

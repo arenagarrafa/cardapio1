@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Arena Garrafa — Painel do Cardápio</title>
+<title>Arena Garrafa — Painel Área VIP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -107,7 +107,7 @@
 <body>
 
 <header>
-  <h1>ARENA <span>GARRAFA</span> — Painel</h1>
+  <h1>ARENA <span>GARRAFA</span> — Painel ÁREA VIP</h1>
   <button id="config-btn">⚙ Configurar</button>
 </header>
 
@@ -149,7 +149,7 @@
 </div>
 
 <script>
-  const FILE_PATH = 'menu.json';
+  const FILE_PATH = 'vip.json';
   const LS_KEY = 'arena-admin-config';
 
   let cfg = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
@@ -233,7 +233,9 @@
       if(!Array.isArray(menuData.promo.dias)) menuData.promo.dias = [];
       renderAll();
       $('loading').classList.add('hidden');
-      $('tabs').style.display = 'flex';
+      // Área VIP usa só a aba de itens (sem promoção/letreiro)
+      $('tabs').style.display = 'none';
+      switchTab('itens');
       $('savebar').classList.remove('hidden');
       setDirty(false);
     } catch(err){
