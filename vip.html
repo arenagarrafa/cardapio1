@@ -71,9 +71,12 @@
     transition:transform 0.12s ease, border-color 0.12s ease;
   }
   .cat-card:active{transform:scale(0.97);border-color:var(--gold);}
-  .cat-card .ico{font-size:30px;line-height:1;}
+  .cat-card .mark{
+    width:26px;height:3px;border-radius:2px;
+    background:linear-gradient(90deg, var(--gold), var(--gold-light));
+  }
   .cat-card .lbl{
-    font-size:16px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;line-height:1.15;
+    font-size:17px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;line-height:1.2;
   }
   .cat-card .qtd{font-size:12.5px;color:var(--muted);font-family:'Barlow',sans-serif;font-weight:600;}
 
@@ -198,19 +201,6 @@
     return t.split('—')[0].trim();
   }
 
-  // ícone por palavra-chave do título da seção
-  function iconFor(title){
-    const t = title.toLowerCase();
-    if(t.includes('balde')) return '🧊';
-    if(t.includes('torre')) return '🗼';
-    if(t.includes('caneca')) return '🍺';
-    if(t.includes('sem álcool') || t.includes('sem alcool')) return '🥤';
-    if(t.includes('dose')) return '🥃';
-    if(t.includes('drink')) return '🍹';
-    if(t.includes('tira gosto') || t.includes('petisc')) return '🍟';
-    return '⭐';
-  }
-
   function render(data){
     const grid = document.getElementById('cat-grid');
     const nav = document.getElementById('nav');
@@ -231,7 +221,7 @@
       card.className = 'cat-card';
       card.href = '#' + id;
       card.innerHTML = `
-        <span class="ico">${iconFor(sec.title)}</span>
+        <span class="mark"></span>
         <span class="lbl">${shortTitle(sec.title)}</span>
         <span class="qtd">${disponiveis} ${disponiveis === 1 ? 'item' : 'itens'}</span>`;
       grid.appendChild(card);
@@ -245,7 +235,7 @@
       // seção do cardápio
       const section = document.createElement('section');
       section.id = id;
-      section.innerHTML = `<h2>${iconFor(sec.title)} ${sec.title}</h2>` + items.map(it => {
+      section.innerHTML = `<h2>${sec.title}</h2>` + items.map(it => {
         const soldOut = itemStatus(it) === 'esgotado';
         return `
           <div class="item${soldOut ? ' sold-out' : ''}">
