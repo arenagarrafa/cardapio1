@@ -359,8 +359,37 @@
   // verifica atualizações periodicamente
   setInterval(() => loadMenu(false), POLL_SECONDS * 1000);
 
+  // ===== AUTO-UPDATE DO PRÓPRIO HTML =====
+  // A cada 5 min, busca o próprio index.html (furando o cache) e compara com a
+  // versão em execução. Se o arquivo mudou no GitHub, recarrega a página
+  // automaticamente já com cache-busting — a TV nunca fica presa num HTML antigo.
+  const HTML_CHECK_MINUTES = 5;
+  let htmlBaseline = null;
+
+  async function fetchOwnHtml(){
+    const res = await fetch(cacheBustedUrl(location.pathname), { cache: 'no-store' });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.text();
+  }
+
+  async function checkHtmlVersion(){
+    try{
+      const html = await fetchOwnHtml();
+      if(htmlBaseline === null){
+        htmlBaseline = html; // primeira verificação define a referência
+      } else if(html !== htmlBaseline){
+        // HTML mudou no servidor: recarrega furando o cache
+        location.replace(location.pathname + '?v=' + Date.now());
+      }
+    } catch(err){
+      console.error('Falha ao verificar versão do HTML:', err);
+    }
+  }
+  checkHtmlVersion();
+  setInterval(checkHtmlVersion, HTML_CHECK_MINUTES * 60 * 1000);
+
   // failsafe: recarrega a página inteira de tempos em tempos
-  setTimeout(() => location.reload(), HARD_RELOAD_HOURS * 60 * 60 * 1000);
+  setTimeout(() => location.replace(location.pathname + '?v=' + Date.now()), HARD_RELOAD_HOURS * 60 * 60 * 1000);
 </script>
 
 </body>

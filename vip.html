@@ -286,6 +286,29 @@
 
   load();
   setInterval(load, POLL_SECONDS * 1000);
+
+  // ===== AUTO-UPDATE DO PRÓPRIO HTML =====
+  // A cada 5 min, verifica se o vip.html mudou no GitHub e, se mudou,
+  // recarrega automaticamente furando o cache.
+  const HTML_CHECK_MINUTES = 5;
+  let htmlBaseline = null;
+
+  async function checkHtmlVersion(){
+    try{
+      const res = await fetch(cacheBustedUrl(location.pathname), { cache: 'no-store' });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const html = await res.text();
+      if(htmlBaseline === null){
+        htmlBaseline = html;
+      } else if(html !== htmlBaseline){
+        location.replace(location.pathname + '?v=' + Date.now());
+      }
+    } catch(err){
+      console.error('Falha ao verificar versão do HTML:', err);
+    }
+  }
+  checkHtmlVersion();
+  setInterval(checkHtmlVersion, HTML_CHECK_MINUTES * 60 * 1000);
 </script>
 
 </body>
