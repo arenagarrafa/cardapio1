@@ -4,12 +4,36 @@
       "title": "CERVEJAS NO BALDE — LONG NECK (5 UN)",
       "columns": [
         [
-          { "name": "Stella Artois Long Neck — Balde (5 un)", "price": "R$ 55,00", "status": "disponivel" },
-          { "name": "Stella Artois Gold Long Neck — Balde (5 un)", "price": "R$ 60,00", "status": "disponivel" },
-          { "name": "Budweiser Long Neck — Balde (5 un)", "price": "R$ 50,00", "status": "disponivel" },
-          { "name": "Império Long Neck — Balde (5 un)", "price": "R$ 48,00", "status": "disponivel" },
-          { "name": "Heineken Long Neck — Balde (5 un)", "price": "R$ 60,00", "status": "disponivel" },
-          { "name": "Corona Long Neck — Balde (5 un)", "price": "R$ 60,00", "status": "disponivel" }
+          {
+            "name": "Stella Artois Long Neck — Balde (5 un)",
+            "price": "R$ 55,00",
+            "status": "esgotado"
+          },
+          {
+            "name": "Stella Artois Gold Long Neck — Balde (5 un)",
+            "price": "R$ 60,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Budweiser Long Neck — Balde (5 un)",
+            "price": "R$ 50,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Império Long Neck — Balde (5 un)",
+            "price": "R$ 48,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Heineken Long Neck — Balde (5 un)",
+            "price": "R$ 60,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Corona Long Neck — Balde (5 un)",
+            "price": "R$ 60,00",
+            "status": "disponivel"
+          }
         ]
       ]
     },
@@ -17,12 +41,36 @@
       "title": "CERVEJAS TORRE",
       "columns": [
         [
-          { "name": "Stella Artois Torre 1,5 L", "price": "R$ 65,00", "status": "disponivel" },
-          { "name": "Stella Artois Torre 2,5 L", "price": "R$ 75,00", "status": "disponivel" },
-          { "name": "Budweiser Torre 1,5 L", "price": "R$ 55,00", "status": "disponivel" },
-          { "name": "Budweiser Torre 2,5 L", "price": "R$ 65,00", "status": "disponivel" },
-          { "name": "Brahma Chopp Torre 1,5 L", "price": "R$ 50,00", "status": "disponivel" },
-          { "name": "Brahma Chopp Torre 2,5 L", "price": "R$ 60,00", "status": "disponivel" }
+          {
+            "name": "Stella Artois Torre 1,5 L",
+            "price": "R$ 65,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Stella Artois Torre 2,5 L",
+            "price": "R$ 75,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Budweiser Torre 1,5 L",
+            "price": "R$ 55,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Budweiser Torre 2,5 L",
+            "price": "R$ 65,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Brahma Chopp Torre 1,5 L",
+            "price": "R$ 50,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Brahma Chopp Torre 2,5 L",
+            "price": "R$ 60,00",
+            "status": "disponivel"
+          }
         ]
       ]
     },
@@ -30,9 +78,21 @@
       "title": "CERVEJAS — CANECAS 330 ML",
       "columns": [
         [
-          { "name": "Stella Artois — caneca 330 ml", "price": "R$ 7,50", "status": "disponivel" },
-          { "name": "Budweiser — caneca 330 ml", "price": "R$ 7,00", "status": "disponivel" },
-          { "name": "Brahma Chopp — caneca 330 ml", "price": "R$ 6,50", "status": "disponivel" }
+          {
+            "name": "Stella Artois — caneca 330 ml",
+            "price": "R$ 7,50",
+            "status": "disponivel"
+          },
+          {
+            "name": "Budweiser — caneca 330 ml",
+            "price": "R$ 7,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Brahma Chopp — caneca 330 ml",
+            "price": "R$ 6,50",
+            "status": "disponivel"
+          }
         ]
       ]
     },
@@ -40,15 +100,51 @@
       "title": "BEBIDAS SEM ÁLCOOL",
       "columns": [
         [
-          { "name": "Refrigerante lata", "price": "R$ 6,00", "status": "disponivel" },
-          { "name": "Refrigerante KS 290 ml", "price": "R$ 6,00", "status": "disponivel" },
-          { "name": "Água com gás", "price": "R$ 5,00", "status": "disponivel" },
-          { "name": "Água sem gás", "price": "R$ 5,00", "status": "disponivel" },
-          { "name": "Cajuína", "price": "R$ 10,00", "status": "disponivel" },
-          { "name": "Suco (copo)", "price": "R$ 8,00", "status": "disponivel" },
-          { "name": "Coco da praia", "price": "R$ 7,00", "status": "disponivel" },
-          { "name": "Red Bull 250 ml", "price": "R$ 12,00", "status": "disponivel" },
-          { "name": "Monster 473 ml", "price": "R$ 15,00", "status": "disponivel" }
+          {
+            "name": "Refrigerante lata",
+            "price": "R$ 6,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Refrigerante KS 290 ml",
+            "price": "R$ 6,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Água com gás",
+            "price": "R$ 5,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Água sem gás",
+            "price": "R$ 5,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Cajuína",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Suco (copo)",
+            "price": "R$ 8,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Coco da praia",
+            "price": "R$ 7,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Red Bull 250 ml",
+            "price": "R$ 12,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Monster 473 ml",
+            "price": "R$ 15,00",
+            "status": "disponivel"
+          }
         ]
       ]
     },
@@ -56,12 +152,36 @@
       "title": "BEBIDAS — DOSES",
       "columns": [
         [
-          { "name": "Campari", "price": "R$ 10,00", "status": "disponivel" },
-          { "name": "Whisky Red Label", "price": "R$ 15,00", "status": "disponivel" },
-          { "name": "Whisky Black White", "price": "R$ 10,00", "status": "disponivel" },
-          { "name": "Lira", "price": "R$ 10,00", "status": "disponivel" },
-          { "name": "Ice", "price": "R$ 10,00", "status": "disponivel" },
-          { "name": "Vinho (taça)", "price": "R$ 10,00", "status": "disponivel" }
+          {
+            "name": "Campari",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Whisky Red Label",
+            "price": "R$ 15,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Whisky Black White",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Lira",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Ice",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Vinho (taça)",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          }
         ]
       ]
     },
@@ -69,9 +189,21 @@
       "title": "DRINKS",
       "columns": [
         [
-          { "name": "Limão", "price": "R$ 13,00", "status": "disponivel" },
-          { "name": "Morango", "price": "R$ 15,00", "status": "disponivel" },
-          { "name": "Kiwi", "price": "R$ 15,00", "status": "disponivel" }
+          {
+            "name": "Limão",
+            "price": "R$ 13,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Morango",
+            "price": "R$ 15,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Kiwi",
+            "price": "R$ 15,00",
+            "status": "disponivel"
+          }
         ]
       ]
     },
@@ -79,16 +211,57 @@
       "title": "TIRA GOSTO — PARA PETISCAR",
       "columns": [
         [
-          { "name": "Batata Frita", "price": "R$ 20,00", "status": "disponivel" },
-          { "name": "Ovos de Codorna (8 un)", "price": "R$ 10,00", "status": "disponivel" },
-          { "name": "Calabresa", "price": "R$ 20,00", "status": "disponivel" },
-          { "name": "Calabresa e Fritas", "price": "R$ 30,00", "status": "disponivel" },
-          { "name": "Filé com Fritas", "price": "R$ 40,00", "status": "disponivel" },
-          { "name": "Filé — 300 g", "price": "R$ 45,00", "status": "disponivel" },
-          { "name": "Asinhas de Frango", "price": "R$ 20,00", "status": "disponivel" },
-          { "name": "Pastelzinho (8 un) Queijo/Carne", "price": "R$ 15,00", "status": "disponivel" }
+          {
+            "name": "Batata Frita",
+            "price": "R$ 20,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Ovos de Codorna (8 un)",
+            "price": "R$ 10,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Calabresa",
+            "price": "R$ 20,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Calabresa e Fritas",
+            "price": "R$ 30,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Filé com Fritas",
+            "price": "R$ 40,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Filé — 300 g",
+            "price": "R$ 45,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Asinhas de Frango",
+            "price": "R$ 20,00",
+            "status": "disponivel"
+          },
+          {
+            "name": "Pastelzinho (8 un) Queijo/Carne",
+            "price": "R$ 15,00",
+            "status": "disponivel"
+          }
         ]
       ]
     }
-  ]
+  ],
+  "frases": [],
+  "promo": {
+    "ativa": false,
+    "titulo": "PROMOÇÃO DO DIA",
+    "descricao": "",
+    "preco": "",
+    "observacao": "",
+    "dias": []
+  }
 }
