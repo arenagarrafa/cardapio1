@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Arena Garrafa — Cardápio TV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500;600;700;800&family=Barlow:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#060d1a;
+    --blue:#1c4f8c;
+    --accent:#3ea6ff;
+    --gold:#f2b134;
+    --gold-light:#ffd873;
+    --white:#f4f6fa;
+    --muted:#84a0c4;
+    --line:rgba(62,166,255,0.18);
+    --red:#e2483d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100vw;height:100vh;overflow:hidden;background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:var(--white);}
+
+  .floodlights{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+  .beam{position:absolute;top:-20%;width:38vw;height:140vh;background:linear-gradient(180deg, rgba(62,166,255,0.10), transparent 65%);animation:sway 14s ease-in-out infinite;}
+  .beam1{left:-6vw; transform:rotate(-14deg); animation-delay:0s;}
+  .beam2{left:70vw; transform:rotate(12deg); animation-delay:3s;}
+  .beam3{left:32vw; transform:rotate(2deg); opacity:0.6; animation-delay:6s;}
+  @keyframes sway{0%,100%{opacity:0.55;}50%{opacity:0.95;}}
+  .pitch-lines{position:fixed;inset:0;z-index:0;opacity:0.05;background-image:repeating-linear-gradient(0deg, var(--accent) 0 2px, transparent 2px 90px),repeating-linear-gradient(90deg, var(--accent) 0 2px, transparent 2px 90px);}
+
+  /* ===== BANNER 1920x300 (proporção 6.4:1) ===== */
+  #top-banner{
+    position:relative;z-index:2;width:100vw;
+    aspect-ratio:1920/300;max-height:22vh;
+    overflow:hidden;border-bottom:2px solid var(--line);
+    display:none;
+  }
+  #top-banner img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  header{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:1.6vh 3vw;border-bottom:2px solid var(--line);background:linear-gradient(180deg, rgba(8,16,30,0.9), rgba(8,16,30,0.4));}
+  .brand{display:flex;align-items:center;gap:1vw;}
+  .ball{width:3.4vh;height:3.4vh;border-radius:50%;background:radial-gradient(circle at 35% 30%, #fff 0 8%, transparent 9%),conic-gradient(from 0deg, #0a1628 0 15%, #f4f6fa 0 30%, #0a1628 0 45%, #f4f6fa 0 60%, #0a1628 0 75%, #f4f6fa 0 90%, #0a1628 0);box-shadow:0 0 1.2vh rgba(62,166,255,0.6);}
+  .wordmark{font-family:'Anton',sans-serif;font-size:3.4vh;letter-spacing:0.04em;line-height:0.9;text-shadow:0 0 1.6vh rgba(62,166,255,0.5);}
+  .wordmark span{display:block;font-size:1.6vh;color:var(--gold);letter-spacing:0.35em;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+  .meta{text-align:right;font-size:1.9vh;color:var(--muted);font-weight:600;letter-spacing:0.03em;}
+  .meta b{color:var(--gold-light);}
+
+  main{position:relative;z-index:2;width:100vw;flex:1;min-height:0;}
+  body{display:flex;flex-direction:column;}
+  .slide{position:absolute;inset:0;padding:2.2vh 3vw 0 3vw;opacity:0;transform:translateY(2vh) scale(0.99);transition:opacity 0.7s ease, transform 0.7s ease;pointer-events:none;}
+  .slide.active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+
+  .banner{display:inline-flex;align-items:center;gap:1vw;background:linear-gradient(180deg,#f4f6fa,#e3e8ef);color:#0a1628;padding:0.9vh 2.4vw;clip-path:polygon(1.5% 0%, 100% 0%, 98.5% 100%, 0% 100%);margin-bottom:2.4vh;}
+  .banner h1{font-family:'Anton',sans-serif;font-size:4vh;letter-spacing:0.02em;}
+  .banner .star{color:var(--blue);font-size:2.6vh;}
+
+  .cols{display:flex;gap:4vw;height:calc(100% - 9vh);}
+  .col{flex:1;display:flex;flex-direction:column;gap:0.4vh;}
+
+  .subhead{font-size:2vh;font-weight:700;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin:1vh 0 0.8vh 0;display:flex;align-items:center;gap:0.7vw;}
+  .subhead::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  .item{display:flex;align-items:baseline;gap:0.6vw;font-size:2.6vh;font-weight:500;padding:0.55vh 0;border-bottom:1px dashed rgba(255,255,255,0.08);}
+  .item .name{white-space:nowrap;color:var(--white);}
+  .item .dots{flex:1;border-bottom:2px dotted rgba(132,160,196,0.4);transform:translateY(-0.6vh);}
+  .item .price{font-family:'Barlow',sans-serif;font-weight:700;color:var(--gold-light);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:2.6vh;}
+
+  .item.sold-out .name{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--red);}
+  .item.sold-out .price{display:none;}
+  .item.sold-out .dots{display:none;}
+  .item.sold-out .tag{margin-left:auto;font-family:'Barlow',sans-serif;font-weight:700;font-size:1.7vh;color:var(--red);border:1.5px solid var(--red);border-radius:3px;padding:0.1vh 0.8vh;letter-spacing:0.08em;}
+
+  .boxed-wrap{border:2px solid var(--accent);border-radius:0.6vh;padding:1.4vh 1.6vw;margin-top:1.6vh;background:rgba(62,166,255,0.06);}
+  .boxed-wrap .subhead{margin-top:0;}
+
+  .callout{display:flex;align-items:center;justify-content:center;height:100%;text-align:center;flex-direction:column;gap:1.2vh;}
+  .callout .grill{width:14vw;height:14vw;max-width:220px;max-height:220px;border-radius:50%;background:repeating-linear-gradient(45deg, #2a160c, #2a160c 10px, #3a1e10 10px, #3a1e10 20px);border:0.6vh solid var(--gold);box-shadow:0 0 4vh rgba(242,177,52,0.25) inset, 0 0 3vh rgba(242,177,52,0.2);}
+  .callout p{font-size:2.2vh;color:var(--muted);max-width:26vw;font-weight:500;}
+
+  .single-col .item{font-size:2.9vh;}
+
+  footer{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:1.2vw;height:4.5vh;flex-shrink:0;border-top:2px solid var(--line);background:linear-gradient(0deg, rgba(8,16,30,0.9), rgba(8,16,30,0.3));}
+  .dot{width:1.4vh;height:1.4vh;border-radius:50%;background:rgba(244,246,250,0.25);transition:background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;cursor:pointer;}
+  .dot.active{background:var(--gold);transform:scale(1.3);box-shadow:0 0 1.4vh rgba(242,177,52,0.7);}
+
+  /* ===== LETREIRO ROLANTE (ticker) ===== */
+  #ticker{
+    position:relative;z-index:2;flex-shrink:0;
+    height:6.5vh;overflow:hidden;
+    background:linear-gradient(180deg,#0d2246,#081527);
+    border-top:2px solid var(--gold);
+    display:flex;align-items:center;
+  }
+  #ticker::before{
+    content:"AO VIVO";
+    position:absolute;left:0;top:0;bottom:0;z-index:2;
+    display:flex;align-items:center;
+    padding:0 1.4vw;
+    background:var(--gold);color:#241500;
+    font-weight:800;font-size:2.1vh;letter-spacing:0.12em;
+    clip-path:polygon(0 0, 100% 0, 88% 100%, 0 100%);
+    padding-right:2.4vw;
+  }
+  .ticker-track{
+    display:flex;white-space:nowrap;
+    animation:ticker-scroll var(--ticker-speed, 60s) linear infinite;
+    will-change:transform;
+  }
+  .ticker-track span{
+    font-size:2.9vh;font-weight:600;color:var(--white);
+    padding:0 3vw;letter-spacing:0.03em;
+  }
+  .ticker-track span b{color:var(--gold-light);font-weight:600;}
+  .ticker-track .sep{color:var(--accent);padding:0;}
+  @keyframes ticker-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  #status{position:fixed;bottom:0.6vh;right:1vw;font-size:1.2vh;color:rgba(132,160,196,0.35);z-index:3;font-family:'Barlow',sans-serif;}
+</style>
+</head>
+<body>
+
+  <div class="floodlights"><div class="beam beam1"></div><div class="beam beam2"></div><div class="beam beam3"></div></div>
+  <div class="pitch-lines"></div>
+
+  <div id="top-banner"><img id="banner-img" alt="Arena Garrafa"></div>
+
+  <header id="fallback-header">
+    <div class="brand">
+      <div class="ball"></div>
+      <div class="wordmark">ARENA GARRAFA<span>ESPAÇO ABERTO</span></div>
+    </div>
+    <div class="meta">POVOADO SANTA LUZ DE BAIXO<br><b>@arena.garrafa</b></div>
+  </header>
+
+  <main id="slides"></main>
+  <footer id="dots"></footer>
+  <div id="ticker"><div class="ticker-track" id="ticker-track"></div></div>
+  <div id="status"></div>
+
+<script>
+  // ======= CONFIG =======
+  const DATA_URL = 'menu.json';         // arquivo de dados (mesmo repositório)
+  const SECONDS_PER_SLIDE = 8;          // tempo de cada tela do carrossel
+  const POLL_SECONDS = 60;              // de quanto em quanto tempo verifica o menu.json
+  const HARD_RELOAD_HOURS = 6;          // recarrega a página inteira de tempos em tempos (failsafe)
+
+  let current = 0;
+  let rotateTimer = null;
+  let lastDataString = null;
+
+  function cacheBustedUrl(url){
+    return url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
+  }
+
+  function itemStatus(it){
+    if(it.status) return it.status;              // 'disponivel' | 'esgotado' | 'oculto'
+    if(it.esgotado === true) return 'esgotado';  // compatibilidade com formato antigo
+    return 'disponivel';
+  }
+
+  function renderItem(it){
+    if(it.subhead){
+      return `<div class="subhead">${it.subhead}</div>`;
+    }
+    const st = itemStatus(it);
+    if(st === 'oculto') return '';               // item some do cardápio
+    const soldOut = st === 'esgotado';
+    return `
+      <div class="item${soldOut ? ' sold-out' : ''}">
+        <span class="name">${it.name}</span>
+        <span class="dots"></span>
+        <span class="price">${it.price || ''}</span>
+        ${soldOut ? '<span class="tag">ESGOTADO</span>' : ''}
+      </div>`;
+  }
+
+  function renderColumn(colItems){
+    // group consecutive "boxed" items into a highlighted box
+    let html = '';
+    let i = 0;
+    while(i < colItems.length){
+      const it = colItems[i];
+      if(it.boxed){
+        html += '<div class="boxed-wrap">';
+        while(i < colItems.length && colItems[i].boxed){
+          html += renderItem(colItems[i]);
+          i++;
+        }
+        html += '</div>';
+      } else {
+        html += renderItem(it);
+        i++;
+      }
+    }
+    return html;
+  }
+
+  function renderSlides(data){
+    const slidesEl = document.getElementById('slides');
+    const dotsEl = document.getElementById('dots');
+    slidesEl.innerHTML = '';
+    dotsEl.innerHTML = '';
+
+    data.slides.forEach((slide, idx) => {
+      const singleColClass = slide.columns.length === 1 ? ' single-col' : '';
+      let colsHtml = slide.columns.map(col => `<div class="col${singleColClass}">${renderColumn(col)}</div>`).join('');
+
+      if(slide.callout){
+        colsHtml += `<div class="col callout"><div class="grill"></div><p>${slide.callout}</p></div>`;
+      }
+
+      const section = document.createElement('section');
+      section.className = 'slide' + (idx === 0 ? ' active' : '');
+      section.innerHTML = `
+        <div class="banner"><span class="star">★</span><h1>${slide.title}</h1><span class="star">★</span></div>
+        <div class="cols">${colsHtml}</div>
+      `;
+      slidesEl.appendChild(section);
+
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (idx === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(idx));
+      dotsEl.appendChild(dot);
+    });
+  }
+
+  function goTo(i){
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    if(!slides.length) return;
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = ((i % slides.length) + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function startRotation(){
+    if(rotateTimer) clearInterval(rotateTimer);
+    rotateTimer = setInterval(() => goTo(current + 1), SECONDS_PER_SLIDE * 1000);
+  }
+
+  function renderBanner(data){
+    const wrap = document.getElementById('top-banner');
+    const img = document.getElementById('banner-img');
+    const fallback = document.getElementById('fallback-header');
+    if(data.banner && data.banner.imagem){
+      img.src = data.banner.imagem;
+      img.onload = () => { wrap.style.display = 'block'; fallback.style.display = 'none'; };
+      img.onerror = () => { wrap.style.display = 'none'; fallback.style.display = 'flex'; };
+    } else {
+      wrap.style.display = 'none';
+      fallback.style.display = 'flex';
+    }
+  }
+
+  function renderTicker(data){
+    const track = document.getElementById('ticker-track');
+    const ticker = document.getElementById('ticker');
+    const frases = data.frases || [];
+    if(!frases.length){ ticker.style.display = 'none'; return; }
+    ticker.style.display = 'flex';
+    const bloco = frases.map(f => `<span>${f}</span><span class="sep">★</span>`).join('');
+    // duplicado para o loop ser contínuo (a animação anda 50% e recomeça sem emenda)
+    track.innerHTML = bloco + bloco;
+    // velocidade proporcional à quantidade de texto (~ constante em px/s)
+    const dur = Math.max(30, frases.join('').length * 0.45);
+    track.style.setProperty('--ticker-speed', dur + 's');
+  }
+
+  async function loadMenu(isFirstLoad){
+    try{
+      const res = await fetch(cacheBustedUrl(DATA_URL), { cache: 'no-store' });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+
+      // only re-render if content actually changed (avoids flicker every poll)
+      if(text !== lastDataString){
+        lastDataString = text;
+        const data = JSON.parse(text);
+        const keepIndex = current;
+        renderSlides(data);
+        renderBanner(data);
+        renderTicker(data);
+        goTo(isFirstLoad ? 0 : keepIndex);
+        if(isFirstLoad) startRotation();
+        document.getElementById('status').textContent = 'atualizado ' + new Date().toLocaleTimeString('pt-BR');
+      }
+    } catch(err){
+      document.getElementById('status').textContent = 'falha ao atualizar — ' + new Date().toLocaleTimeString('pt-BR');
+      console.error('Erro ao carregar menu.json:', err);
+    }
+  }
+
+  // primeira carga
+  loadMenu(true);
+
+  // verifica atualizações periodicamente
+  setInterval(() => loadMenu(false), POLL_SECONDS * 1000);
+
+  // failsafe: recarrega a página inteira de tempos em tempos
+  setTimeout(() => location.reload(), HARD_RELOAD_HOURS * 60 * 60 * 1000);
+</script>
+
+</body>
+</html>

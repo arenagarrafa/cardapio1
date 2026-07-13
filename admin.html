@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Arena Garrafa — Painel do Cardápio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#060d1a; --panel:#0e1e38; --panel2:#132949;
+    --accent:#3ea6ff; --gold:#f2b134; --white:#f4f6fa;
+    --muted:#84a0c4; --green:#3ecf6e; --red:#e2483d; --gray:#5a6c85;
+    --line:rgba(62,166,255,0.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--white);font-family:'Barlow Condensed',sans-serif;min-height:100vh;padding-bottom:90px;}
+
+  header{padding:18px 20px;border-bottom:2px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  header h1{font-size:24px;font-weight:800;letter-spacing:0.03em;}
+  header h1 span{color:var(--gold);}
+  #config-btn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:6px 14px;font-family:inherit;font-size:15px;cursor:pointer;}
+
+  .wrap{max-width:760px;margin:0 auto;padding:16px;}
+
+  /* config panel */
+  #config{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:18px;}
+  #config h2{font-size:19px;margin-bottom:12px;color:var(--gold);}
+  #config label{display:block;font-size:15px;color:var(--muted);margin:10px 0 4px;}
+  #config input{width:100%;padding:10px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--white);font-family:'Barlow',sans-serif;font-size:15px;}
+  #config .hint{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.45;font-family:'Barlow',sans-serif;}
+  #config .hint a{color:var(--accent);}
+  #config button{margin-top:14px;background:var(--accent);color:#04101f;border:none;border-radius:6px;padding:10px 22px;font-weight:700;font-size:16px;font-family:inherit;cursor:pointer;}
+
+  .slide-group{margin-bottom:22px;}
+  .slide-group h2{font-size:18px;font-weight:700;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:8px;}
+
+  .row{display:flex;align-items:center;gap:10px;background:var(--panel);border-radius:8px;padding:10px 12px;margin-bottom:6px;}
+  .row.state-esgotado{background:rgba(226,72,61,0.10);}
+  .row.state-oculto{opacity:0.45;}
+  .row .info{flex:1;min-width:0;}
+  .row .nm{font-size:18px;font-weight:600;}
+  .row.state-oculto .nm{text-decoration:line-through;}
+  .row .pr{font-size:14px;color:var(--gold);font-family:'Barlow',sans-serif;font-weight:600;}
+
+  .states{display:flex;gap:4px;flex-shrink:0;}
+  .states button{
+    border:1px solid var(--line);background:var(--panel2);color:var(--muted);
+    border-radius:6px;padding:7px 10px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer;
+    letter-spacing:0.02em;
+  }
+  .states button.on-disponivel{background:var(--green);border-color:var(--green);color:#04240f;}
+  .states button.on-esgotado{background:var(--red);border-color:var(--red);color:#fff;}
+  .states button.on-oculto{background:var(--gray);border-color:var(--gray);color:#fff;}
+
+  /* save bar */
+  #savebar{
+    position:fixed;left:0;right:0;bottom:0;z-index:5;
+    background:rgba(8,16,30,0.97);border-top:2px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 18px;
+  }
+  #save-status{font-size:15px;color:var(--muted);font-family:'Barlow',sans-serif;}
+  #save-status.ok{color:var(--green);}
+  #save-status.err{color:var(--red);}
+  #save-btn{
+    background:var(--gold);color:#241500;border:none;border-radius:8px;
+    padding:12px 28px;font-size:17px;font-weight:800;font-family:inherit;cursor:pointer;
+    letter-spacing:0.03em;
+  }
+  #save-btn:disabled{opacity:0.45;cursor:default;}
+
+  #loading{padding:40px;text-align:center;color:var(--muted);font-size:17px;}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ARENA <span>GARRAFA</span> — Painel do Cardápio</h1>
+  <button id="config-btn">⚙ Configurar</button>
+</header>
+
+<div class="wrap">
+
+  <div id="config" class="hidden">
+    <h2>Conexão com o GitHub</h2>
+    <label>Usuário/organização (owner)</label>
+    <input id="cfg-owner" placeholder="ex: arenagarrafa">
+    <label>Nome do repositório</label>
+    <input id="cfg-repo" placeholder="ex: cardapio">
+    <label>Branch</label>
+    <input id="cfg-branch" value="main">
+    <label>Token de acesso (fine-grained)</label>
+    <input id="cfg-token" type="password" placeholder="github_pat_...">
+    <p class="hint">
+      Crie o token em GitHub → Settings → Developer settings → <b>Fine-grained tokens</b>.
+      Dê acesso <b>somente a este repositório</b> com permissão <b>Contents: Read and write</b>.
+      O token fica salvo apenas neste navegador — nunca vai para o código do site.
+    </p>
+    <button id="cfg-save">Salvar configuração</button>
+  </div>
+
+  <div id="loading">Carregando cardápio…</div>
+  <div id="items"></div>
+</div>
+
+<div id="savebar" class="hidden">
+  <span id="save-status">Nenhuma alteração pendente</span>
+  <button id="save-btn" disabled>SALVAR NO CARDÁPIO</button>
+</div>
+
+<script>
+  const FILE_PATH = 'menu.json';
+  const LS_KEY = 'arena-admin-config';
+
+  let cfg = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+  let menuData = null;
+  let fileSha = null;
+  let dirty = false;
+
+  const $ = id => document.getElementById(id);
+
+  // ---------- config ----------
+  function showConfig(){
+    $('config').classList.remove('hidden');
+    if(cfg){
+      $('cfg-owner').value = cfg.owner || '';
+      $('cfg-repo').value = cfg.repo || '';
+      $('cfg-branch').value = cfg.branch || 'main';
+      $('cfg-token').value = cfg.token || '';
+    }
+  }
+  $('config-btn').onclick = showConfig;
+  $('cfg-save').onclick = () => {
+    cfg = {
+      owner: $('cfg-owner').value.trim(),
+      repo: $('cfg-repo').value.trim(),
+      branch: $('cfg-branch').value.trim() || 'main',
+      token: $('cfg-token').value.trim()
+    };
+    localStorage.setItem(LS_KEY, JSON.stringify(cfg));
+    $('config').classList.add('hidden');
+    loadMenu();
+  };
+
+  // ---------- base64 helpers (UTF-8 safe) ----------
+  function b64ToUtf8(b64){
+    return new TextDecoder().decode(Uint8Array.from(atob(b64.replace(/\n/g,'')), c => c.charCodeAt(0)));
+  }
+  function utf8ToB64(str){
+    const bytes = new TextEncoder().encode(str);
+    let bin = '';
+    bytes.forEach(b => bin += String.fromCharCode(b));
+    return btoa(bin);
+  }
+
+  // ---------- GitHub API ----------
+  function apiUrl(){
+    return `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${FILE_PATH}?ref=${cfg.branch}`;
+  }
+  function headers(){
+    return {
+      'Authorization': 'Bearer ' + cfg.token,
+      'Accept': 'application/vnd.github+json'
+    };
+  }
+
+  async function loadMenu(){
+    if(!cfg || !cfg.owner || !cfg.repo || !cfg.token){
+      $('loading').textContent = 'Configure a conexão com o GitHub para começar (botão ⚙ acima).';
+      showConfig();
+      return;
+    }
+    $('loading').classList.remove('hidden');
+    $('loading').textContent = 'Carregando cardápio…';
+    try{
+      const res = await fetch(apiUrl(), { headers: headers(), cache: 'no-store' });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const json = await res.json();
+      fileSha = json.sha;
+      menuData = JSON.parse(b64ToUtf8(json.content));
+      renderItems();
+      $('loading').classList.add('hidden');
+      $('savebar').classList.remove('hidden');
+      setDirty(false);
+    } catch(err){
+      $('loading').textContent = 'Erro ao carregar: ' + err.message +
+        '. Verifique usuário, repositório, branch e token na configuração (⚙).';
+      console.error(err);
+    }
+  }
+
+  // ---------- render ----------
+  function getStatus(item){
+    if(item.status) return item.status;                 // 'disponivel' | 'esgotado' | 'oculto'
+    if(item.esgotado === true) return 'esgotado';       // compatibilidade com formato antigo
+    return 'disponivel';
+  }
+
+  function renderItems(){
+    const root = $('items');
+    root.innerHTML = '';
+    menuData.slides.forEach((slide, si) => {
+      const group = document.createElement('div');
+      group.className = 'slide-group';
+      group.innerHTML = `<h2>${slide.title}</h2>`;
+      slide.columns.forEach((col, ci) => {
+        col.forEach((item, ii) => {
+          if(item.subhead) return; // subtítulos não são editáveis
+          const st = getStatus(item);
+          const row = document.createElement('div');
+          row.className = 'row state-' + st;
+          row.innerHTML = `
+            <div class="info">
+              <div class="nm">${item.name}</div>
+              <div class="pr">${item.price || ''}</div>
+            </div>
+            <div class="states">
+              <button data-s="disponivel" class="${st==='disponivel'?'on-disponivel':''}">Disponível</button>
+              <button data-s="esgotado" class="${st==='esgotado'?'on-esgotado':''}">Esgotado</button>
+              <button data-s="oculto" class="${st==='oculto'?'on-oculto':''}">Ocultar</button>
+            </div>`;
+          row.querySelectorAll('button').forEach(btn => {
+            btn.onclick = () => {
+              item.status = btn.dataset.s;
+              delete item.esgotado; // migra para o formato novo
+              setDirty(true);
+              renderItems();
+            };
+          });
+          group.appendChild(row);
+        });
+      });
+      root.appendChild(group);
+    });
+  }
+
+  function setDirty(v){
+    dirty = v;
+    $('save-btn').disabled = !v;
+    const s = $('save-status');
+    s.className = '';
+    s.textContent = v ? 'Alterações não salvas' : 'Nenhuma alteração pendente';
+  }
+
+  // ---------- save ----------
+  $('save-btn').onclick = async () => {
+    const s = $('save-status');
+    s.className = '';
+    s.textContent = 'Salvando…';
+    $('save-btn').disabled = true;
+    try{
+      const body = {
+        message: 'Atualização do cardápio pelo painel — ' + new Date().toLocaleString('pt-BR'),
+        content: utf8ToB64(JSON.stringify(menuData, null, 2)),
+        sha: fileSha,
+        branch: cfg.branch
+      };
+      const res = await fetch(apiUrl().split('?')[0], {
+        method: 'PUT',
+        headers: { ...headers(), 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if(!res.ok){
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e.message || ('HTTP ' + res.status));
+      }
+      const out = await res.json();
+      fileSha = out.content.sha;
+      setDirty(false);
+      s.className = 'ok';
+      s.textContent = '✓ Salvo! A TV atualiza em 1–2 minutos.';
+    } catch(err){
+      s.className = 'err';
+      s.textContent = 'Erro ao salvar: ' + err.message;
+      $('save-btn').disabled = false;
+      console.error(err);
+    }
+  };
+
+  loadMenu();
+</script>
+
+</body>
+</html>
