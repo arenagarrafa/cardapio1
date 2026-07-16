@@ -157,15 +157,16 @@
             "price": "R$ 6,00"
           },
           {
-            "name": "Água com gás (copo)",
+            "name": "Água com gás",
             "price": "R$ 5,00"
           },
           {
-            "name": "Água sem gás (copo)",
-            "price": "R$ 5,00"
+            "name": "Água sem gás",
+            "price": "R$ 5,00",
+            "status": "disponivel"
           },
           {
-            "name": "Cajuína (copo)",
+            "name": "Cajuína",
             "price": "R$ 10,00"
           }
         ],
@@ -175,7 +176,7 @@
             "price": "R$ 8,00"
           },
           {
-            "name": "Coco da Praia (copo)",
+            "name": "Coco da Praia",
             "price": "R$ 7,00"
           },
           {
