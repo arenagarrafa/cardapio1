@@ -81,7 +81,11 @@
   .callout .grill{width:14vw;height:14vw;max-width:220px;max-height:220px;border-radius:50%;background:repeating-linear-gradient(45deg, #2a160c, #2a160c 10px, #3a1e10 10px, #3a1e10 20px);border:0.6vh solid var(--gold);box-shadow:0 0 4vh rgba(242,177,52,0.25) inset, 0 0 3vh rgba(242,177,52,0.2);}
   .callout p{font-size:2.2vh;color:var(--muted);max-width:26vw;font-weight:500;}
 
-  .single-col .item{font-size:4.5vh;}
+  .single-col{max-width:82%;margin:0 auto;}
+  .single-col .item{font-size:6vh;padding:1.3vh 0;}
+  .single-col .item .price{font-size:6vh;}
+  .single-col .subhead{font-size:3.6vh;}
+  .pagina{font-size:2.6vh;color:var(--muted);font-family:'Barlow',sans-serif;font-weight:600;vertical-align:middle;}
 
   /* ===== SLIDE DE PROMOÇÃO ===== */
   .promo-slide{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:2vh;}
@@ -168,7 +172,7 @@
 <script>
   // ======= CONFIG =======
   const DATA_URL = 'menu.json';         // arquivo de dados (mesmo repositório)
-  const SECONDS_PER_SLIDE = 8;          // tempo de cada tela do carrossel
+  const SECONDS_PER_SLIDE = 7;          // tempo de cada tela do carrossel
   const POLL_SECONDS = 60;              // de quanto em quanto tempo verifica o menu.json
   const HARD_RELOAD_HOURS = 6;          // recarrega a página inteira de tempos em tempos (failsafe)
 
@@ -233,6 +237,10 @@
     return true;
   }
 
+  // Máximo de itens por tela. Seções com mais itens são divididas
+  // automaticamente em várias telas (2/3, 3/3, etc.).
+  const MAX_ITENS_POR_TELA = 6;
+
   function renderSlides(data){
     const slidesEl = document.getElementById('slides');
     const dotsEl = document.getElementById('dots');
@@ -257,20 +265,40 @@
     }
 
     data.slides.forEach(slide => {
-      const singleColClass = slide.columns.length === 1 ? ' single-col' : '';
-      let colsHtml = slide.columns.map(col => `<div class="col${singleColClass}">${renderColumn(col)}</div>`).join('');
+      // junta todas as colunas do JSON numa lista única, preservando a ordem
+      const todos = slide.columns.flat();
 
-      if(slide.callout && slide.callout.trim()){
-        colsHtml += `<div class="col callout"><div class="grill"></div><p>${slide.callout}</p></div>`;
-      }
+      // separa em "blocos" de tela: um subtítulo sempre começa junto do que vem depois.
+      // Cada tela recebe até MAX_ITENS_POR_TELA itens de preço (subtítulos não contam).
+      const telas = [];
+      let atual = [];
+      let contagem = 0;
+      todos.forEach(entry => {
+        const ehItemVisivel = !entry.subhead && itemStatus(entry) !== 'oculto';
+        if(ehItemVisivel && contagem >= MAX_ITENS_POR_TELA){
+          telas.push(atual);
+          atual = [];
+          contagem = 0;
+        }
+        atual.push(entry);
+        if(ehItemVisivel) contagem++;
+      });
+      if(atual.length) telas.push(atual);
 
-      const section = document.createElement('section');
-      section.className = 'slide';
-      section.innerHTML = `
-        <div class="banner"><span class="star">★</span><h1>${slide.title}</h1><span class="star">★</span></div>
-        <div class="cols">${colsHtml}</div>
-      `;
-      sections.push(section);
+      const totalTelas = telas.length;
+      telas.forEach((itensDaTela, i) => {
+        // não cria tela vazia (ex: sobrou só um subtítulo no fim)
+        if(!itensDaTela.some(e => !e.subhead)) return;
+
+        const sufixo = totalTelas > 1 ? ` <span class="pagina">(${i+1}/${totalTelas})</span>` : '';
+        const section = document.createElement('section');
+        section.className = 'slide';
+        section.innerHTML = `
+          <div class="banner"><span class="star">★</span><h1>${slide.title}${sufixo}</h1><span class="star">★</span></div>
+          <div class="cols"><div class="col single-col">${renderColumn(itensDaTela)}</div></div>
+        `;
+        sections.push(section);
+      });
     });
 
     sections.forEach((section, idx) => {
